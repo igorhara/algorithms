@@ -11,9 +11,10 @@ import java.util.*;
 public class Main {
 
 
-    private static int[][] planetLink;
-    private static Node[][] portals;
-    private static Node[][] queries;
+    static int[][] planetLink;
+    static Node[][] portals;
+    static int nQueries;
+
 
 
     public static  class Node {
@@ -53,25 +54,12 @@ public class Main {
         portals[index]=new Node[]{new Node(p1,u1),new Node(p2,u2)};
     }
 
-    public static void addQuery(int index,int p1,int u1,int p2,int u2){
-        queries[index]=new Node[]{new Node(p1,u1),new Node(p2,u2)};
-    }
 
     public static void main(String args[]){
         getData();
-
-        for(Node[] query: queries){
-            Node start = query[0];
-            Node target = query[1];
-
-            System.out.println (findSteps(target, start));
-
-        }
-
-
     }
 
-    private static String findSteps(Node target, Node start) {
+    public static String findSteps(Node target, Node start) {
         List<Node> toCheck = new ArrayList<Node>();
         List<Node> checked = new ArrayList<Node>();
         toCheck.add(start);
@@ -155,7 +143,7 @@ public class Main {
 
     private static void getData() {
 
-        int planets,nPortals,nQueries;
+        int planets,nPortals;
         Scanner reader = new Scanner(System.in);
 
 
@@ -163,7 +151,6 @@ public class Main {
         nPortals = reader.nextInt();
         nQueries = reader.nextInt();
 
-        System.out.println("");
 
         planetLink = new int[planets-1][2];
         for(int i = 0; i < planets-1;i++ ){
@@ -171,7 +158,6 @@ public class Main {
             int p2 = reader.nextInt();
 
             addConnection(i,p1,p2);
-            System.out.println("");
         }
         portals = new Node[nPortals][2];
         for(int i = 0; i < nPortals;i++ ){
@@ -181,19 +167,23 @@ public class Main {
             int u2 = reader.nextInt();
 
             addPortals(i,p1,u1,p2,u2);
-            System.out.println("");
+
         }
 
-        queries = new Node[nQueries][2];
         for(int i = 0; i < nQueries;i++ ){
             int p1 = reader.nextInt();
             int u1 = reader.nextInt();
             int p2 = reader.nextInt();
             int u2 = reader.nextInt();
 
-            addQuery(i,p1,u1,p2,u2);
-            System.out.println("");
+            Node start = new Node(p1,u1);
+            Node target = new Node(p2,u2);
+
+            System.out.println(findSteps(target, start));
+
         }
+
+
     }
 
 
